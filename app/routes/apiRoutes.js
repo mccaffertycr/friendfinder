@@ -13,13 +13,14 @@ module.exports = function(app) {
         friendsData.push(req.body);
     });    
 
-    function bestMatch(score) {
+    function bestMatch(totalScore) {
         for (var i = 0; i < friendsData.length; i++) {
             var friendScore = friendsData[i].scores.reduce((a ,b) => a + b, 0);
-            if ((friendScore - score) <= 5 || (friendScore - score) >= -5) {
+            if ((friendScore - totalScore) <= 5 || (totalScore - friendScore) <= 5) {
                 return friendsData[i];
             } 
         }
+        return friendsData[0];
     }
 
 }
